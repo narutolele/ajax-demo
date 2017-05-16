@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ajax-demo</title>
+    <style>
+        ol {
+            list-style: none;
+        }
+
+        #container img {
+            width: 130px;
+        }
+
+        #container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 650px;
+        }
+    </style>
+</head>
+
+<body>
+    <ol id="container">
+    </ol>
+    <button id=btn>加载下一页</button>
+    <script>
+        var page = 1
+        btn.onclick = function () {
+            var request = new XMLHttpRequest()
+            request.open('GET', 'https://narutolele.github.io/ajax-demo/' + page + '.json')
+            request.onload = function () {
+                page += 1
+                let object = JSON.parse(request.responseText) //把request变成对象
+                let hasNextPage = object.hasNextPage
+                if (page > 5) {
+                    btn.disabled = true
+                    btn.innerText = '没有下一页'
+                }
+                let array = object.items
+                array.forEach(function (item, index) {
+                    let li = document.createElement('li')
+                    let img = document.createElement('img')
+                    li.appendChild(img)
+                    img.src = item.url
+                    container.appendChild(li)
+                })
+
+            }
+            request.send()
+
+        }
+
+    </script>
+</body>
+
+</html>
