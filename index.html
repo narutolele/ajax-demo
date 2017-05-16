@@ -32,7 +32,7 @@
         var page = 1
         btn.onclick = function () {
             var request = new XMLHttpRequest()
-            request.open('GET', 'https://narutolele.github.io/ajax-demo/' + page + '.json')
+            request.open('GET', 'https://narutolele.github.io/ajax-demo/page' + page + '.json')//此处的page容易混淆，其实只是一个数字
             request.onload = function () {
                 page += 1
                 let object = JSON.parse(request.responseText) //把request变成对象
